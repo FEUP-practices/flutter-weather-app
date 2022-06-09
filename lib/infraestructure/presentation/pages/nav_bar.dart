@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:get_it/get_it.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:redux/redux.dart';
 import 'package:weather_app/app/config/context/app_state.dart';
 import 'package:weather_app/core/domain.dart';
-import 'package:weather_app/core/usecases/cities_use_case.dart';
 import 'package:weather_app/infraestructure/presentation/components/nav_bar_dot.dart';
 import 'package:weather_app/infraestructure/presentation/pages/city_search.dart';
 import 'package:weather_app/infraestructure/presentation/pages/empty_nav_bar.dart';
 import 'package:weather_app/infraestructure/presentation/pages/weather_tab.dart';
+import 'package:weather_app/infraestructure/presentation/sections/modal_city_options.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -53,7 +52,7 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
     return List.generate(
         _citiesList.length == 1 ? 2 : _citiesList.length,
         (index) => BottomNavigationBarItem(
-              icon: const NavBarDot(color: Colors.blueGrey),
+              icon: const NavBarDot(color: Color.fromARGB(255, 90, 90, 90)),
               activeIcon:
                   NavBarDot(color: Theme.of(context).colorScheme.primary),
               label: '',
@@ -79,7 +78,7 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
           body: Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/rain.jpg"),
+                      image: AssetImage("assets/images/clear-day.jpg"),
                       fit: BoxFit.cover)),
               child: Container(
                   padding: EdgeInsets.only(bottom: _size),
@@ -92,7 +91,7 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
                     icon: const Icon(
                       CupertinoIcons.search,
                       size: 30,
-                      color: Colors.blueGrey,
+                      color: Color.fromARGB(255, 41, 41, 41),
                     ),
                     onPressed: () => Navigator.push(
                         context,
@@ -107,34 +106,16 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
                         icon: const Icon(
                           Icons.menu,
                           size: 30,
-                          color: Colors.blueGrey,
+                          color: Color.fromARGB(255, 41, 41, 41),
                         ),
                         onPressed: () => showCupertinoModalBottomSheet(
                             duration: const Duration(milliseconds: 300),
                             context: context,
-                            builder: (context) => Material(
-                                    child: SafeArea(
-                                  top: false,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      ListTile(
-                                        title: const Text('Delete'),
-                                        leading: const Icon(
-                                          CupertinoIcons.delete,
-                                          color: Colors.red,
-                                        ),
-                                        onTap: () => {
-                                          GetIt.I
-                                              .get<CitiesUseCase>()
-                                              .deleteCity(
-                                                  _citiesList[_currentIndex]),
-                                          Navigator.of(context).pop()
-                                        },
-                                      )
-                                    ],
-                                  ),
-                                ))))),
+                            builder: (context) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 15.0),
+                                  child: ModalCityOptions(
+                                      _citiesList[_currentIndex]),
+                                )))),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 125),
                 child: _citiesList.isEmpty

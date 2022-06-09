@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:weather_app/app/config/style.dart';
 import 'package:weather_app/core/domain.dart';
 import 'package:weather_app/core/usecases/cities_use_case.dart';
-import 'package:weather_app/infraestructure/presentation/components/horizontal_divider.dart';
-import 'package:weather_app/infraestructure/presentation/components/modal_add_city.dart';
+import 'package:weather_app/infraestructure/presentation/components/horizontal_padding.dart';
+import 'package:weather_app/infraestructure/presentation/sections/modal_add_city.dart';
 
 class CitySearch extends StatefulWidget {
   const CitySearch({Key? key}) : super(key: key);
@@ -89,14 +88,14 @@ class _CitySearchState extends State<CitySearch> {
                               ),
                               onPressed: () => Navigator.pop(context),
                             ),
-                            const HorizontalDivider(),
+                            const HorizontalPadding(),
                             TextField(
                                 onChanged: onTextChanged,
                                 style: const TextStyle(
                                     color: Color.fromARGB(255, 178, 178, 178)),
                                 controller: _inputController,
                                 decoration: inputStyle(_inputController)),
-                            const HorizontalDivider(),
+                            const HorizontalPadding(),
                             Expanded(
                                 child: ListView.builder(
                                     itemCount: _citiesList.length,
@@ -104,8 +103,8 @@ class _CitySearchState extends State<CitySearch> {
                                       return ListTile(
                                         onTap: () => onTapCity(
                                             _citiesList[index].description),
-                                        title:
-                                            p(_citiesList[index].description),
+                                        title: p(_citiesList[index].description,
+                                            color: Colors.white),
                                       );
                                     })),
                           ],

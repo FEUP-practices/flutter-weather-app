@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class CardInfo extends StatelessWidget {
@@ -10,12 +8,11 @@ class CardInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
       decoration: const BoxDecoration(
           color: Color.fromARGB(148, 24, 17, 33),
           borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Center(child: child),
+      child: child,
     );
   }
 }

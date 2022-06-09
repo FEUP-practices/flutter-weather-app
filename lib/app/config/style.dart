@@ -1,26 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget h1(String text) => Text(
+Widget h1(String text, {Color? color}) => Text(
       text,
-      style: const TextStyle(fontSize: 86, fontWeight: FontWeight.w200),
+      style: TextStyle(color: color, fontSize: 86, fontWeight: FontWeight.w200),
     );
 
-Widget h2(String text) => Text(
+Widget h2(String text, {Color? color}) => Text(
       text,
-      style: const TextStyle(fontSize: 42, fontWeight: FontWeight.w200),
+      style: TextStyle(color: color, fontSize: 42, fontWeight: FontWeight.w200),
       textAlign: TextAlign.center,
     );
 
-Widget h3(String text) => Text(
+Widget h3(String text, {Color? color}) => Text(
       text,
-      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+      style: TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.w300),
       textAlign: TextAlign.center,
     );
 
-Widget p(String text) => Text(
+Widget p(String text, {Color? color}) => Text(
       text,
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+      style: TextStyle(color: color, fontSize: 18, fontWeight: FontWeight.w300),
     );
 
 get mh20 => const EdgeInsets.symmetric(horizontal: 20);

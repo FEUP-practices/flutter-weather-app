@@ -12,7 +12,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setUpBeans();
   runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
     runApp(StoreProvider<AppState>(
         store: await setUpStore(), child: const MyApp()));
   },
