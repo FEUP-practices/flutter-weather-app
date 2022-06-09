@@ -24,6 +24,7 @@ class CitiesPersistentStorage {
 
   void addCity(City city) {
     var cities = getCities();
+    if (cities.contains(city)) return;
     cities.add(city);
     _saveCities(cities);
   }

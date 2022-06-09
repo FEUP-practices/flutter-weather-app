@@ -61,7 +61,7 @@ class _CitySearchState extends State<CitySearch> {
     showCupertinoModalBottomSheet(
         duration: const Duration(milliseconds: 300),
         context: context,
-        builder: (_) => ModalAddCity(City(description: description)));
+        builder: (_) => ModalAddCity(description));
   }
 
   @override

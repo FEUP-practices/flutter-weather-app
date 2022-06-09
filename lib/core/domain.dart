@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 
 class City {
   String description;
+  LatLong latLong;
 
-  City({required this.description});
+  City({required this.description, required this.latLong});
 
   factory City.fromJson(Map<String, dynamic> json) {
     return City(
-      description: json["description"],
-    );
+        description: json["description"],
+        latLong: LatLong(latitude: 0, longitude: 0));
   }
 
   Map<String, dynamic> toJson() {

@@ -10,15 +10,17 @@ import 'package:weather_app/core/usecases/cities_use_case.dart';
 import 'package:weather_app/core/usecases/weather_use_case.dart';
 
 class ModalAddCity extends StatefulWidget {
-  final City _cityToAdd;
+  final String _description;
 
-  const ModalAddCity(this._cityToAdd, {Key? key}) : super(key: key);
+  const ModalAddCity(this._description, {Key? key}) : super(key: key);
 
   @override
   State<ModalAddCity> createState() => _ModalAddCityState();
 }
 
 class _ModalAddCityState extends State<ModalAddCity> {
+  late LatLong _latLong;
+
   @override
   void initState() {
     super.initState();
@@ -26,10 +28,8 @@ class _ModalAddCityState extends State<ModalAddCity> {
   }
 
   void loadInfo() async {
-    final cityName = widget._cityToAdd.description.split(',')[0];
-    final latLong = await GetIt.I.get<CitiesUseCase>().getLatLong(cityName);
-    final weatherInfo =
-        await GetIt.I.get<WeatherUseCase>().getWeatherInfo(latLong);
+    final cityName = widget._description.split(',')[0];
+    _latLong = await GetIt.I.get<CitiesUseCase>().getLatLong(cityName);
   }
 
   @override
@@ -52,10 +52,11 @@ class _ModalAddCityState extends State<ModalAddCity> {
               ),
               ElevatedButton(
                   onPressed: () => {
-                        store.dispatch(
-                          doAddCity(
-                              City(description: widget._cityToAdd.description)),
-                        ),
+                        store.dispatch(doAddCity(
+                          City(
+                              description: widget._description,
+                              latLong: _latLong),
+                        )),
                         Navigator.of(context).pop()
                       },
                   child: p('Add')),

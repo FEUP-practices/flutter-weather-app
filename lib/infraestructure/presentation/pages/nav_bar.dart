@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:get_it/get_it.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:redux/redux.dart';
 import 'package:weather_app/app/config/context/app_state.dart';
 import 'package:weather_app/core/domain.dart';
+import 'package:weather_app/core/usecases/weather_use_case.dart';
 import 'package:weather_app/infraestructure/presentation/components/nav_bar_dot.dart';
 import 'package:weather_app/infraestructure/presentation/pages/city_search.dart';
 import 'package:weather_app/infraestructure/presentation/pages/empty_nav_bar.dart';

@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:weather_app/app/config/configuration.dart';
 import 'package:weather_app/app/config/context/app_state.dart';
+import 'package:weather_app/core/exceptions.dart';
 import 'package:weather_app/infraestructure/presentation/pages/nav_bar.dart';
 
 void main() async {
@@ -17,8 +18,16 @@ void main() async {
   },
       (error, stack) => {
             print(stack),
-            Fluttertoast.showToast(
-                msg: error.toString(), toastLength: Toast.LENGTH_LONG)
+            if (error is CustomException)
+              {
+                Fluttertoast.showToast(
+                    msg: error.message, toastLength: Toast.LENGTH_LONG)
+              }
+            else
+              {
+                Fluttertoast.showToast(
+                    msg: "An error occurred", toastLength: Toast.LENGTH_LONG)
+              }
           });
 }
 
