@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/app/config/style.dart';
+import 'package:weather_app/core/domain.dart';
 import 'package:weather_app/infraestructure/presentation/components/horizontal_divider.dart';
 import 'package:weather_app/infraestructure/presentation/components/horizontal_padding.dart';
 
 class WeatherCharacteristics extends StatelessWidget {
-  const WeatherCharacteristics({Key? key}) : super(key: key);
+  final CurrentWeatherCharacteristics _currentWeatherCharacteristics;
+
+  const WeatherCharacteristics(this._currentWeatherCharacteristics, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,8 @@ class WeatherCharacteristics extends StatelessWidget {
         const HorizontalPadding(),
         const HorizontalDivider(),
         const HorizontalPadding(),
-        p("Pressure: 23", color: Colors.white),
+        p("Pressure: ${_currentWeatherCharacteristics.pressure} hPa",
+            color: Colors.white),
         const HorizontalPadding(),
         p("Precitipitation: 34 mm", color: Colors.white)
       ],

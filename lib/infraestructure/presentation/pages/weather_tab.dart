@@ -43,7 +43,6 @@ class _WeatherTabState extends State<WeatherTab>
         if (_controller!.offset > 168) {
           setState(() {
             _silverCollapsed = true;
-            title = "${widget.city.description}\n22° Sunny";
           });
         } else {
           setState(() {
@@ -66,6 +65,7 @@ class _WeatherTabState extends State<WeatherTab>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: FutureBuilder<Weather>(
@@ -93,7 +93,9 @@ class _WeatherTabState extends State<WeatherTab>
                                   translationDisabled: const Offset(0, 20),
                                   translationEnabled: const Offset(0, 0),
                                   curve: Curves.easeInOut,
-                                  child: h3(title, color: Colors.white))))
+                                  child: h3(
+                                      "${widget.city.description}\n${snapshot.data!.currentWeather.currentWeatherHeader.temperature} ° - ${snapshot.data!.currentWeather.currentWeatherHeader.main}",
+                                      color: Colors.white))))
                       : Container(),
                   Container(
                     padding: _silverCollapsed
@@ -120,8 +122,12 @@ class _WeatherTabState extends State<WeatherTab>
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      h1(" 22°", color: Colors.white),
-                                      h2("Sunny", color: Colors.white),
+                                      h1("${snapshot.data!.currentWeather.currentWeatherHeader.temperature}°",
+                                          color: Colors.white),
+                                      h2(
+                                          snapshot.data!.currentWeather
+                                              .currentWeatherHeader.main,
+                                          color: Colors.white),
                                     ])),
                           ),
                         ),
@@ -130,11 +136,19 @@ class _WeatherTabState extends State<WeatherTab>
                           Container(
                               margin: mh20,
                               child: Column(children: [
-                                CardInfo(child: DayForecastCard()),
+                                CardInfo(
+                                    child: DayForecastCard(
+                                        snapshot.data!.hourlyForecastItem)),
                                 const HorizontalPadding(),
-                                CardInfo(child: WeekForecastCard()),
+                                CardInfo(
+                                    child: WeekForecastCard(
+                                        snapshot.data!.dailyForecastItem)),
                                 const HorizontalPadding(),
-                                CardInfo(child: WeatherCharacteristics()),
+                                CardInfo(
+                                    child: WeatherCharacteristics(snapshot
+                                        .data!
+                                        .currentWeather
+                                        .currentWeatherCharacteristics)),
                                 const HorizontalPadding(),
                                 CardInfo(
                                   child: Footer(widget.city.description),

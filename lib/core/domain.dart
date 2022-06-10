@@ -1,5 +1,4 @@
-import 'package:animated_widgets/generated/i18n.dart';
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
 class City {
   String description;
@@ -10,39 +9,64 @@ class City {
   factory City.fromJson(Map<String, dynamic> json) {
     return City(
         description: json["description"],
-        latLong: LatLong(latitude: 0, longitude: 0));
+        latLong: json["latLong"] == null
+            ? LatLong(latitude: 0, longitude: 0)
+            : LatLong(
+                latitude: json["latLong"]["lat"],
+                longitude: json["latLong"]["lng"]));
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      "description": description,
-    };
+    return {"description": description, "latLong": latLong.toJson()};
   }
 }
 
 class Weather {
-  Weather();
+  List<DailyForecastItem> dailyForecastItem;
+  List<HourlyForecastItem> hourlyForecastItem;
+  CurrentWeather currentWeather;
+
+  Weather(
+      {required this.dailyForecastItem,
+      required this.hourlyForecastItem,
+      required this.currentWeather});
 
   factory Weather.fromJson(Map<String, dynamic> json) {
     final current = json["current"];
     final daily = json["daily"];
     final hourly = json["hourly"];
     return Weather(
-        //current_temp = current["temp"],
-        );
+        dailyForecastItem:
+            (daily as List).map((e) => DailyForecastItem.fromJson(e)).toList(),
+        hourlyForecastItem: (hourly as List)
+            .map((e) => HourlyForecastItem.fromJson(e))
+            .toList(),
+        currentWeather: CurrentWeather.fromJson(current));
   }
 }
 
-// class CurrentWeather {
-//   DateTime dateTime;
-//   int humidity;
-//   double precipitation;
+class CurrentWeather {
+  DateTime dateTime;
+  CurrentWeatherHeader currentWeatherHeader;
+  CurrentWeatherCharacteristics currentWeatherCharacteristics;
 
-// }
+  CurrentWeather(
+      {required this.dateTime,
+      required this.currentWeatherHeader,
+      required this.currentWeatherCharacteristics});
+
+  factory CurrentWeather.fromJson(Map<String, dynamic> json) {
+    return CurrentWeather(
+        dateTime: DateTime.fromMillisecondsSinceEpoch(json["dt"] * 1000),
+        currentWeatherHeader: CurrentWeatherHeader.fromJson(json),
+        currentWeatherCharacteristics:
+            CurrentWeatherCharacteristics.fromJson(json));
+  }
+}
 
 class LatLong {
-  double latitude;
-  double longitude;
+  num latitude;
+  num longitude;
 
   LatLong({required this.latitude, required this.longitude});
 
@@ -52,38 +76,39 @@ class LatLong {
       longitude: json["results"][0]["geometry"]["location"]["lng"],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {"lat": latitude, "lng": longitude};
+  }
 }
 
-class WeekForecastItem {
-  String day;
+class DailyForecastItem {
   String weatherIcon;
   Temperature temperature;
 
-  WeekForecastItem({
-    required this.day,
+  DailyForecastItem({
     required this.weatherIcon,
     required this.temperature,
   });
 
-  factory WeekForecastItem.fromJson(Map<String, dynamic> json) {
-    return WeekForecastItem(
-      day: json["day"],
-      weatherIcon: json["weather"]["icon"],
+  factory DailyForecastItem.fromJson(Map<String, dynamic> json) {
+    return DailyForecastItem(
+      weatherIcon: json["weather"][0]["icon"],
       temperature: Temperature.fromJson(json["temp"]),
     );
   }
 }
 
 class Temperature {
-  double min;
-  double max;
-  double temp;
+  num min;
+  num max;
+  num temp;
 
   Temperature({required this.temp, required this.min, required this.max});
 
   factory Temperature.fromJson(Map<String, dynamic> json) {
     return Temperature(
-      temp: json["temp"],
+      temp: json["day"],
       min: json["min"],
       max: json["max"],
     );
@@ -93,7 +118,7 @@ class Temperature {
 class HourlyForecastItem {
   DateTime dateTime;
   String weatherIcon;
-  Temperature temperature;
+  num temperature;
 
   HourlyForecastItem({
     required this.dateTime,
@@ -104,7 +129,58 @@ class HourlyForecastItem {
   factory HourlyForecastItem.fromJson(Map<String, dynamic> json) {
     return HourlyForecastItem(
         dateTime: DateTime.fromMillisecondsSinceEpoch(json["dt"] * 1000),
-        weatherIcon: json["weather"]["icon"],
+        weatherIcon: json["weather"][0]["icon"],
         temperature: json["temp"]);
+  }
+}
+
+class CurrentWeatherHeader {
+  String main;
+  String description;
+  int temperature;
+  String weatherIcon;
+
+  CurrentWeatherHeader({
+    required this.main,
+    required this.description,
+    required this.temperature,
+    required this.weatherIcon,
+  });
+
+  factory CurrentWeatherHeader.fromJson(Map<String, dynamic> json) {
+    final _weather = json["weather"][0];
+
+    return CurrentWeatherHeader(
+      main: _weather["main"],
+      description: _weather["description"],
+      weatherIcon: _weather["icon"],
+      temperature: json["temp"].ceil(),
+    );
+  }
+}
+
+class CurrentWeatherCharacteristics {
+  int humidity;
+  // double precipitation;
+  int uvi;
+  int visibility;
+  int pressure;
+
+  CurrentWeatherCharacteristics({
+    required this.humidity,
+    // required this.precipitation,
+    required this.uvi,
+    required this.visibility,
+    required this.pressure,
+  });
+
+  factory CurrentWeatherCharacteristics.fromJson(Map<String, dynamic> json) {
+    return CurrentWeatherCharacteristics(
+      humidity: json["humidity"],
+      // precipitation: json["precipitation"],
+      uvi: json["uvi"],
+      visibility: json["visibility"],
+      pressure: json["pressure"],
+    );
   }
 }

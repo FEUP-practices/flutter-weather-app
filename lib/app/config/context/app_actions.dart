@@ -21,11 +21,8 @@ ThunkAction<AppState> doGetCities() {
 
 ThunkAction<AppState> doRemoveCity(City city) {
   return (Store<AppState> store) async {
-    print("HOOA");
     GetIt.I.get<CitiesUseCase>().deleteCity(city);
-    print("HOLAAA");
     List<City> citiesList = await GetIt.I.get<CitiesUseCase>().getSavedCities();
-    print(citiesList);
     store.dispatch(SetCities(citiesList));
   };
 }

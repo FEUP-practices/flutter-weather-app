@@ -18,7 +18,6 @@ class WeatherRestApi {
         jsonDecode(res.body)["error_message"] != null) {
       throw WeatherInfoException;
     }
-    print(jsonDecode(res.body));
     return Weather.fromJson(jsonDecode(res.body));
   }
 }

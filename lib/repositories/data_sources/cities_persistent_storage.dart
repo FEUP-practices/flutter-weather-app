@@ -30,6 +30,6 @@ class CitiesPersistentStorage {
   }
 
   void _saveCities(List<City> cities) {
-    _sp.setString('cities', jsonEncode(cities));
+    _sp.setString('cities', jsonEncode(cities.map((e) => e.toJson()).toList()));
   }
 }

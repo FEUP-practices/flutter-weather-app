@@ -21,12 +21,16 @@ void main() async {
             if (error is CustomException)
               {
                 Fluttertoast.showToast(
-                    msg: error.message, toastLength: Toast.LENGTH_LONG)
+                    timeInSecForIosWeb: 3,
+                    msg: error.message,
+                    toastLength: Toast.LENGTH_LONG)
               }
             else
               {
                 Fluttertoast.showToast(
-                    msg: "An error occurred", toastLength: Toast.LENGTH_LONG)
+                    timeInSecForIosWeb: 3,
+                    msg: "An error occurred",
+                    toastLength: Toast.LENGTH_LONG)
               }
           });
 }
