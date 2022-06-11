@@ -6,7 +6,7 @@ class AppState {
   // Global state
   List<City>? cities = [];
 
-  AppState copyWith({List<City>? cities}) {
+  AppState CopyWith({List<City>? cities}) {
     this.cities = cities;
     return this;
   }

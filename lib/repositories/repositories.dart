@@ -11,6 +11,7 @@ abstract class CitiesRepository {
   List<City> getSavedCities();
   void saveCity(City city);
   void deleteCity(City city);
+  void updateCity(City city);
 }
 
 abstract class WeatherRepository {
@@ -48,6 +49,11 @@ class CitiesRepositoryImpl implements CitiesRepository {
   @override
   Future<LatLong> getLatLong(String localidade) {
     return _data.getLatLong(localidade);
+  }
+
+  @override
+  void updateCity(City city) {
+    _storage.updateCity(city);
   }
 }
 

@@ -32,4 +32,12 @@ class CitiesPersistentStorage {
   void _saveCities(List<City> cities) {
     _sp.setString('cities', jsonEncode(cities.map((e) => e.toJson()).toList()));
   }
+
+  void updateCity(City city) {
+    var cities = getCities();
+    var index = cities.indexWhere((c) => c.description == city.description);
+    if (index == -1) return;
+    cities[index] = city;
+    _saveCities(cities);
+  }
 }

@@ -7,6 +7,7 @@ abstract class CitiesUseCase {
   Future<List<City>> getSavedCities();
   void saveCity(City city);
   void deleteCity(City city);
+  void updateCity(City city);
 }
 
 class CitiesUseCaseImpl implements CitiesUseCase {
@@ -32,6 +33,11 @@ class CitiesUseCaseImpl implements CitiesUseCase {
   @override
   void deleteCity(City city) {
     return _service.deleteCity(city);
+  }
+
+  @override
+  void updateCity(City city) {
+    return _service.updateCity(city);
   }
 
   @override

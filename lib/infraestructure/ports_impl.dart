@@ -31,6 +31,11 @@ class CitiesServiceImpl implements CitiesService {
   Future<LatLong> getLatLong(String localidade) {
     return _citiesRepository.getLatLong(localidade);
   }
+
+  @override
+  void updateCity(City city) {
+    _citiesRepository.updateCity(city);
+  }
 }
 
 class WeatherServiceImpl implements WeatherService {

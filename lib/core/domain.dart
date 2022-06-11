@@ -3,12 +3,17 @@ import 'dart:convert';
 class City {
   String description;
   LatLong latLong;
+  String background;
 
-  City({required this.description, required this.latLong});
+  City(
+      {required this.description,
+      required this.latLong,
+      this.background = 'Clear'});
 
   factory City.fromJson(Map<String, dynamic> json) {
     return City(
         description: json["description"],
+        background: json["background"] ?? "Clear",
         latLong: json["latLong"] == null
             ? LatLong(latitude: 0, longitude: 0)
             : LatLong(
@@ -17,7 +22,11 @@ class City {
   }
 
   Map<String, dynamic> toJson() {
-    return {"description": description, "latLong": latLong.toJson()};
+    return {
+      "description": description,
+      "latLong": latLong.toJson(),
+      "background": background
+    };
   }
 }
 
@@ -137,7 +146,7 @@ class HourlyForecastItem {
 class CurrentWeatherHeader {
   String main;
   String description;
-  int temperature;
+  num temperature;
   String weatherIcon;
 
   CurrentWeatherHeader({
@@ -160,11 +169,11 @@ class CurrentWeatherHeader {
 }
 
 class CurrentWeatherCharacteristics {
-  int humidity;
+  num humidity;
   // double precipitation;
-  int uvi;
-  int visibility;
-  int pressure;
+  num uvi;
+  num visibility;
+  num pressure;
 
   CurrentWeatherCharacteristics({
     required this.humidity,

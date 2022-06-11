@@ -4,9 +4,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get_it/get_it.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:redux/redux.dart';
+import 'package:weather_app/app/config/context/app_actions.dart';
 import 'package:weather_app/app/config/context/app_state.dart';
 import 'package:weather_app/core/domain.dart';
 import 'package:weather_app/core/usecases/weather_use_case.dart';
+import 'package:weather_app/core/utils.dart';
 import 'package:weather_app/infraestructure/presentation/components/nav_bar_dot.dart';
 import 'package:weather_app/infraestructure/presentation/pages/city_search.dart';
 import 'package:weather_app/infraestructure/presentation/pages/empty_nav_bar.dart';
@@ -37,7 +39,7 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
 
   _getTabBarSize() {
     setState(() {
-      _size = (_key.currentState?.context.size?.height ?? 0.0) + 10;
+      _size = (_key.currentState?.context.size?.height ?? 90) + 10;
     });
   }
 
@@ -47,7 +49,11 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
       return [const EmptyNavBar()];
     }
     _citiesList = _list;
-    return _list.map((city) => WeatherTab(city: city)).toList();
+    return _list
+        .map((city) => WeatherTab(
+              city: city,
+            ))
+        .toList();
   }
 
   List<BottomNavigationBarItem> buildItems() {
@@ -78,9 +84,11 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
       return Scaffold(
           extendBody: true,
           body: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/clear-day.jpg"),
+                      image: AssetImage(getWallpaper(_citiesList.isEmpty
+                          ? '../../../assets/images/clear-day.jpg'
+                          : _citiesList[_currentIndex].background)),
                       fit: BoxFit.cover)),
               child: Container(
                   padding: EdgeInsets.only(bottom: _size),
@@ -129,8 +137,8 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
                         items: buildItems(),
                         onTap: (index) => setState(() {
                           _tabController?.animateToPage(index,
-                              duration: const Duration(milliseconds: 400),
-                              curve: Curves.ease);
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeIn);
                         }),
                         backgroundColor: Colors.transparent,
                         elevation: 0,

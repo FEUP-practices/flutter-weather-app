@@ -37,7 +37,7 @@ Future<void> setUpBeans() async {
 Future<Store<AppState>> setUpStore() async {
   final cities = await GetIt.I.get<CitiesUseCase>().getSavedCities();
   return Store<AppState>(appReducer,
-      initialState: AppState().copyWith(cities: cities),
+      initialState: AppState().CopyWith(cities: cities),
       middleware: [thunkMiddleware]);
 }
 

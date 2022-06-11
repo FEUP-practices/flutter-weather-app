@@ -12,6 +12,11 @@ class SetCities {
   SetCities(this.cities);
 }
 
+class SetBackground {
+  final String background;
+  SetBackground(this.background);
+}
+
 ThunkAction<AppState> doGetCities() {
   return (Store<AppState> store) async {
     List<City> citiesList = await GetIt.I.get<CitiesUseCase>().getSavedCities();
@@ -39,6 +44,14 @@ ThunkAction<AppState> doAddCity(City city) {
     }
     GetIt.I.get<CitiesUseCase>().saveCity(city);
     citiesList = await GetIt.I.get<CitiesUseCase>().getSavedCities();
+    store.dispatch(SetCities(citiesList));
+  };
+}
+
+ThunkAction<AppState> doUpdateCity(City city) {
+  return (Store<AppState> store) async {
+    GetIt.I.get<CitiesUseCase>().updateCity(city);
+    List<City> citiesList = await GetIt.I.get<CitiesUseCase>().getSavedCities();
     store.dispatch(SetCities(citiesList));
   };
 }

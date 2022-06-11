@@ -6,6 +6,7 @@ abstract class CitiesService {
   List<City> getSavedCities();
   void saveCity(City city);
   void deleteCity(City city);
+  void updateCity(City city);
 }
 
 abstract class WeatherService {
