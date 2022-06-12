@@ -29,8 +29,6 @@ class _WeatherTabState extends State<WeatherTab>
     with AutomaticKeepAliveClientMixin {
   ScrollController? _controller;
   bool _silverCollapsed = false;
-  String title = "--";
-
   Future<Weather>? _weather;
 
   @override
@@ -49,13 +47,9 @@ class _WeatherTabState extends State<WeatherTab>
         } else if (_silverCollapsed) {
           setState(() {
             _silverCollapsed = false;
-            title = widget.city.description;
           });
         }
       });
-    });
-    setState(() {
-      title = widget.city.description;
     });
   }
 
@@ -129,7 +123,8 @@ class _WeatherTabState extends State<WeatherTab>
                             flexibleSpace: FlexibleSpaceBar(
                               title: _silverCollapsed
                                   ? Container()
-                                  : h3(title, color: Colors.white),
+                                  : h3(widget.city.description,
+                                      color: Colors.white),
                               expandedTitleScale: 1.2,
                               background: Padding(
                                   padding: const EdgeInsets.symmetric(

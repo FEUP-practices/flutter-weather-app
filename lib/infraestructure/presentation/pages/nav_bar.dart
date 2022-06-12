@@ -28,7 +28,6 @@ class _NavBarState extends State<NavBar> {
   PageController? _tabController;
   final GlobalKey _key = GlobalKey();
   double _size = 150;
-  List<City> _citiesList = [];
 
   @override
   void initState() {
@@ -45,23 +44,20 @@ class _NavBarState extends State<NavBar> {
     });
   }
 
-  List<Widget> _pageTabs(Store<AppState> store) {
-    final _list = store.state.cities ?? [];
-    if (_list.isEmpty) {
+  List<Widget> _pageTabs(List<City> cities) {
+    if (cities.isEmpty) {
       return [const EmptyNavBar()];
     }
-    _citiesList = [..._list];
-    _currentIndex = 0;
-    return _list
+    return cities
         .map((city) => WeatherTab(
               city: city,
             ))
         .toList();
   }
 
-  List<BottomNavigationBarItem> buildItems() {
+  List<BottomNavigationBarItem> buildItems(List<City> cities) {
     return List.generate(
-        _citiesList.length == 1 ? 2 : _citiesList.length,
+        cities.length == 1 ? 2 : cities.length,
         (index) => BottomNavigationBarItem(
               icon: const NavBarDot(color: Color.fromARGB(255, 90, 90, 90)),
               activeIcon:
@@ -70,10 +66,10 @@ class _NavBarState extends State<NavBar> {
             ));
   }
 
-  Widget buildPageView(Store<AppState> store) {
+  Widget buildPageView(List<City> cities) {
     return PageView(
         controller: _tabController,
-        children: _pageTabs(store),
+        children: _pageTabs(cities),
         onPageChanged: (index) {
           setState(() {
             _currentIndex = index;
@@ -84,6 +80,7 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return StoreBuilder<AppState>(builder: (context, store) {
+      final _citiesList = store.state.cities ?? [];
       return Scaffold(
           extendBody: true,
           body: Container(
@@ -95,7 +92,7 @@ class _NavBarState extends State<NavBar> {
                       fit: BoxFit.cover)),
               child: Container(
                   padding: EdgeInsets.only(bottom: _size),
-                  child: buildPageView(store))),
+                  child: buildPageView(_citiesList))),
           bottomNavigationBar: Stack(children: [
             Positioned(
                 right: 20,
@@ -137,7 +134,7 @@ class _NavBarState extends State<NavBar> {
                         key: _key,
                         currentIndex: _currentIndex,
                         type: BottomNavigationBarType.fixed,
-                        items: buildItems(),
+                        items: buildItems(_citiesList),
                         onTap: (index) => setState(() {
                           _tabController?.animateToPage(index,
                               duration: const Duration(milliseconds: 300),
