@@ -22,7 +22,7 @@ class NavBar extends StatefulWidget {
   _NavBarState createState() => _NavBarState();
 }
 
-class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
+class _NavBarState extends State<NavBar> {
   //Índice inicial del NavigationBar
   int _currentIndex = 0;
   PageController? _tabController;
@@ -34,7 +34,9 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = PageController();
-    WidgetsBinding.instance?.addPostFrameCallback((_) => _getTabBarSize());
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _getTabBarSize();
+    });
   }
 
   _getTabBarSize() {
@@ -48,7 +50,8 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
     if (_list.isEmpty) {
       return [const EmptyNavBar()];
     }
-    _citiesList = _list;
+    _citiesList = [..._list];
+    _currentIndex = 0;
     return _list
         .map((city) => WeatherTab(
               city: city,
@@ -87,7 +90,7 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(getWallpaper(_citiesList.isEmpty
-                          ? '../../../assets/images/clear-day.jpg'
+                          ? 'Clear'
                           : _citiesList[_currentIndex].background)),
                       fit: BoxFit.cover)),
               child: Container(

@@ -57,7 +57,7 @@ class _ModalAddCityState extends State<ModalAddCity> {
                               description: widget._description,
                               latLong: _latLong),
                         )),
-                        Navigator.of(context).pop()
+                        Navigator.of(context).popUntil((route) => route.isFirst)
                       },
                   child: p('Add')),
               const SizedBox(

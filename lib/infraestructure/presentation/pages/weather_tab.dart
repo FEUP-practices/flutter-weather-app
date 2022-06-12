@@ -30,10 +30,8 @@ class _WeatherTabState extends State<WeatherTab>
   ScrollController? _controller;
   bool _silverCollapsed = false;
   String title = "--";
-  String? _background;
 
   Future<Weather>? _weather;
-  late Store<AppState> _store;
 
   @override
   void initState() {
@@ -43,12 +41,12 @@ class _WeatherTabState extends State<WeatherTab>
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       _controller = ScrollController();
-      _controller!.addListener(() {
+      _controller?.addListener(() {
         if (_controller!.offset > 168) {
           setState(() {
             _silverCollapsed = true;
           });
-        } else {
+        } else if (_silverCollapsed) {
           setState(() {
             _silverCollapsed = false;
             title = widget.city.description;
@@ -88,9 +86,13 @@ class _WeatherTabState extends State<WeatherTab>
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.data == null) {
-                    return const Center(
-                      child: Text("Error loading the weather data"),
-                    );
+                    return Center(
+                        child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      child: h3(
+                        "Error loading the weather data",
+                      ),
+                    ));
                   }
                   widget.city.background =
                       snapshot.data!.currentWeather.currentWeatherHeader.main;
