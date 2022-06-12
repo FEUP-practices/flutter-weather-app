@@ -5,12 +5,13 @@ import 'package:get_it/get_it.dart';
 import 'package:weather_app/app/config/context/app_actions.dart';
 import 'package:weather_app/app/config/context/app_state.dart';
 import 'package:weather_app/core/domain.dart';
-import 'package:weather_app/core/usecases/cities_use_case.dart';
 
 class ModalCityOptions extends StatelessWidget {
   final City _city;
+  final VoidCallback _onDelete;
 
-  const ModalCityOptions(this._city, {Key? key}) : super(key: key);
+  const ModalCityOptions(this._city, this._onDelete, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class ModalCityOptions extends StatelessWidget {
               ),
               onTap: () => {
                 store.dispatch(doRemoveCity(_city)),
+                _onDelete(),
                 Navigator.of(context).pop()
               },
             )

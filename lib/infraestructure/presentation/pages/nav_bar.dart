@@ -124,7 +124,15 @@ class _NavBarState extends State<NavBar> {
                             builder: (context) => Padding(
                                   padding: const EdgeInsets.only(bottom: 15.0),
                                   child: ModalCityOptions(
-                                      _citiesList[_currentIndex]),
+                                      _citiesList[_currentIndex],
+                                      () => {
+                                            setState(() {
+                                              _tabController?.animateToPage(0,
+                                                  duration: const Duration(
+                                                      milliseconds: 300),
+                                                  curve: Curves.easeIn);
+                                            })
+                                          }),
                                 )))),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 125),

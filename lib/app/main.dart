@@ -18,20 +18,12 @@ void main() async {
   },
       (error, stack) => {
             print(stack),
-            if (error is CustomException)
-              {
-                Fluttertoast.showToast(
-                    timeInSecForIosWeb: 3,
-                    msg: error.message,
-                    toastLength: Toast.LENGTH_LONG)
-              }
-            else
-              {
-                Fluttertoast.showToast(
-                    timeInSecForIosWeb: 3,
-                    msg: "An error occurred",
-                    toastLength: Toast.LENGTH_LONG)
-              }
+            Fluttertoast.showToast(
+                timeInSecForIosWeb: 4,
+                msg: error is CustomException
+                    ? error.message
+                    : "An error ocurred",
+                toastLength: Toast.LENGTH_LONG)
           });
 }
 
