@@ -37,7 +37,7 @@ class DayForecastCard extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              p("${_listWeeklyForecastItem[index].temperature} °",
+                              p("${_listWeeklyForecastItem[index].temperature.ceil()} °",
                                   color: Colors.white),
                               const SizedBox(
                                 width: 7,

@@ -21,9 +21,11 @@ class Footer extends StatelessWidget {
         p("Data obtained of", color: const Color.fromARGB(255, 182, 182, 182)),
         RichText(
             text: TextSpan(
-                text: "https://openweathermap.org/",
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                text: "openweathermap.org",
+                style: const TextStyle(
+                    color: Color.fromARGB(255, 182, 182, 182), fontSize: 18),
                 recognizer: TapGestureRecognizer()
+                  // ignore: deprecated_member_use
                   ..onTap = () => launch('https://openweathermap.org/'))),
       ],
     );

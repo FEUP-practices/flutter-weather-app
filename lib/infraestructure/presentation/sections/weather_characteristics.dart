@@ -24,7 +24,13 @@ class WeatherCharacteristics extends StatelessWidget {
         p("Pressure: ${_currentWeatherCharacteristics.pressure} hPa",
             color: Colors.white),
         const HorizontalPadding(),
-        p("Precitipitation: 34 mm", color: Colors.white)
+        p("Humidity: ${_currentWeatherCharacteristics.humidity} %",
+            color: Colors.white),
+        const HorizontalPadding(),
+        p("UVI: ${_currentWeatherCharacteristics.uvi}", color: Colors.white),
+        const HorizontalPadding(),
+        p("Visibility: ${_currentWeatherCharacteristics.visibility}",
+            color: Colors.white)
       ],
     );
   }

@@ -121,6 +121,8 @@ class _WeatherTabState extends State<WeatherTab>
                             expandedHeight: 250.0,
                             collapsedHeight: 90,
                             flexibleSpace: FlexibleSpaceBar(
+                              titlePadding: const EdgeInsets.only(bottom: 15),
+                              centerTitle: true,
                               title: _silverCollapsed
                                   ? Container()
                                   : h3(widget.city.description,
@@ -133,7 +135,7 @@ class _WeatherTabState extends State<WeatherTab>
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        h1("${snapshot.data!.currentWeather.currentWeatherHeader.temperature}°",
+                                        h1(" ${snapshot.data!.currentWeather.currentWeatherHeader.temperature}°",
                                             color: Colors.white),
                                         h2(
                                             snapshot.data!.currentWeather

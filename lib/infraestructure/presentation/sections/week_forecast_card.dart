@@ -15,7 +15,8 @@ class WeekForecastCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        p("Forecast (10-day)", color: Colors.white),
+        p("Forecast (${_listDailyForecastItem.length}-day)",
+            color: Colors.white),
         const HorizontalPadding(),
         ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
@@ -33,9 +34,9 @@ class WeekForecastCard extends StatelessWidget {
                           "$WEATHER_ICONS_URL${_listDailyForecastItem[index].weatherIcon}.png",
                           height: 30,
                           width: 30),
-                      p("min: ${_listDailyForecastItem[index].temperature.min} °",
+                      p("min: ${_listDailyForecastItem[index].temperature.min.ceil()} °",
                           color: Colors.white),
-                      p("max: ${_listDailyForecastItem[index].temperature.max} °",
+                      p("max: ${_listDailyForecastItem[index].temperature.max.ceil()} °",
                           color: Colors.white),
                     ],
                   ),
