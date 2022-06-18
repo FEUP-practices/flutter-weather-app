@@ -4,7 +4,9 @@
 
 Simply put the .env file with the Google Places API Key and the Open weather API key under the root folder. After this, just execute in the terminal:
 
-> flutter run -t lib/app/main.dart
+```
+flutter run -t lib/app/main.dart
+```
 
 ## Architecture
 
