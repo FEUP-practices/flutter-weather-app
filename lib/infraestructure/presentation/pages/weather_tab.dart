@@ -8,7 +8,7 @@ import 'package:weather_app/app/config/context/app_state.dart';
 import 'package:weather_app/app/config/style.dart';
 import 'package:weather_app/core/domain.dart';
 import 'package:weather_app/core/usecases/weather_use_case.dart';
-import 'package:weather_app/core/utils.dart';
+import 'package:weather_app/infraestructure/ports_impl.dart';
 import 'package:weather_app/infraestructure/presentation/components/card_info.dart';
 import 'package:weather_app/infraestructure/presentation/components/horizontal_padding.dart';
 import 'package:weather_app/infraestructure/presentation/sections/day_forecast_card.dart';

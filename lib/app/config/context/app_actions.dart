@@ -17,13 +17,6 @@ class SetBackground {
   SetBackground(this.background);
 }
 
-ThunkAction<AppState> doGetCities() {
-  return (Store<AppState> store) async {
-    List<City> citiesList = await GetIt.I.get<CitiesUseCase>().getSavedCities();
-    store.dispatch(SetCities(citiesList));
-  };
-}
-
 ThunkAction<AppState> doRemoveCity(City city) {
   return (Store<AppState> store) async {
     GetIt.I.get<CitiesUseCase>().deleteCity(city);

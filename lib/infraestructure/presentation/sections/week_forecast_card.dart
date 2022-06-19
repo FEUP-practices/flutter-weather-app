@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/app/config/global_variables.dart';
 import 'package:weather_app/app/config/style.dart';
 import 'package:weather_app/core/domain.dart';
+import 'package:weather_app/infraestructure/ports_impl.dart';
 import 'package:weather_app/infraestructure/presentation/components/horizontal_divider.dart';
 import 'package:weather_app/infraestructure/presentation/components/horizontal_padding.dart';
 
 class WeekForecastCard extends StatelessWidget {
   final List<DailyForecastItem> _listDailyForecastItem;
+  late List<String> _weekDays;
 
-  const WeekForecastCard(this._listDailyForecastItem, {Key? key})
-      : super(key: key);
+  WeekForecastCard(this._listDailyForecastItem, {Key? key}) : super(key: key) {
+    _weekDays = getWeekDays(_listDailyForecastItem.length);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class WeekForecastCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      p("Tod.", color: Colors.white),
+                      p(_weekDays[index], color: Colors.white),
                       Image.network(
                           "$WEATHER_ICONS_URL${_listDailyForecastItem[index].weatherIcon}.png",
                           height: 30,

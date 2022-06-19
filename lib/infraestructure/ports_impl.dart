@@ -1,50 +1,44 @@
-import 'package:weather_app/core/domain.dart';
-import 'package:weather_app/core/ports.dart';
-import 'package:weather_app/repositories/repositories.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-class CitiesServiceImpl implements CitiesService {
-  final CitiesRepository _citiesRepository;
+const WEEK_DAYS = [
+  'Mon.',
+  'Tue.  ',
+  'Wed.',
+  'Thu. ',
+  'Fri.    ',
+  'Sat.  ',
+  'Sun. ',
+];
 
-  CitiesServiceImpl(this._citiesRepository);
-
-  @override
-  Future<List<City>> getCities(String text) {
-    return _citiesRepository.getCities(text);
-  }
-
-  @override
-  List<City> getSavedCities() {
-    return _citiesRepository.getSavedCities();
-  }
-
-  @override
-  void saveCity(City city) {
-    return _citiesRepository.saveCity(city);
-  }
-
-  @override
-  void deleteCity(City city) {
-    return _citiesRepository.deleteCity(city);
-  }
-
-  @override
-  Future<LatLong> getLatLong(String localidade) {
-    return _citiesRepository.getLatLong(localidade);
-  }
-
-  @override
-  void updateCity(City city) {
-    _citiesRepository.updateCity(city);
+String getWallpaper(String code) {
+  switch (code) {
+    case 'Clear':
+      return 'assets/images/clear-day.jpg';
+    case 'Rain':
+    case 'Drizzle':
+      return 'assets/images/rain.jpg';
+    case 'Snow':
+      return 'assets/images/snow.jpg';
+    case 'Wind':
+      return 'assets/images/wind.jpg';
+    case 'Fog':
+    case 'Mist':
+    case 'Haze':
+      return 'assets/images/fog.jpg';
+    case 'Thunderstorm':
+      return 'assets/images/thunderstorm.jpg';
+    case 'Clouds':
+      return 'assets/images/cloudy.jpg';
+    default:
+      return 'assets/images/clear-day.jpg';
   }
 }
 
-class WeatherServiceImpl implements WeatherService {
-  final WeatherRepository _weatherRepository;
-
-  WeatherServiceImpl(this._weatherRepository);
-
-  @override
-  Future<Weather> getWeatherInfo(LatLong latLong) {
-    return _weatherRepository.getWeatherInfo(latLong);
+List<String> getWeekDays(int numDays) {
+  List<String> days = [];
+  for (int i = 0; i < numDays; i++) {
+    days.add(WEEK_DAYS[DateTime.now().add(Duration(days: i)).weekday - 1]);
   }
+  return days;
 }

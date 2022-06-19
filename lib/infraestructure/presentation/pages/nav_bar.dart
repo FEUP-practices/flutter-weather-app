@@ -8,7 +8,7 @@ import 'package:weather_app/app/config/context/app_actions.dart';
 import 'package:weather_app/app/config/context/app_state.dart';
 import 'package:weather_app/core/domain.dart';
 import 'package:weather_app/core/usecases/weather_use_case.dart';
-import 'package:weather_app/core/utils.dart';
+import 'package:weather_app/infraestructure/ports_impl.dart';
 import 'package:weather_app/infraestructure/presentation/components/nav_bar_dot.dart';
 import 'package:weather_app/infraestructure/presentation/pages/city_search.dart';
 import 'package:weather_app/infraestructure/presentation/pages/empty_nav_bar.dart';

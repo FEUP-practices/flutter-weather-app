@@ -7,7 +7,7 @@ import 'package:weather_app/app/config/context/app_state.dart';
 import 'package:weather_app/app/config/global_variables.dart';
 import 'package:weather_app/core/ports.dart';
 import 'package:weather_app/core/usecases/cities_use_case.dart';
-import 'package:weather_app/infraestructure/ports_impl.dart';
+import 'package:weather_app/repositories/ports_impl.dart';
 import 'package:weather_app/repositories/data_sources/cities_persistent_storage.dart';
 import 'package:weather_app/repositories/data_sources/cities_rest_api.dart';
 import 'package:weather_app/repositories/repositories.dart';
