@@ -16,6 +16,24 @@ The Google Places API is used to make autocompletion on the search tab, in order
 
 The system architecture is pretty simple: the iOS or Android device connects directly to the APIs. If we wanted to scalate the project, we would need to decouple it and separate in a server and proccess the incoming data before sending it back to the client.
 
+Moreover, an strong error boundary has been implemented and the application fails securely without leaking essential log information. The Flutter app is wrapped in the function `runZoneGuarded`, which helps us to make a great error boundary. As the app counts on custom exceptions, if an Exception is thrown and it is a custom exception, the respective message is shown. If it is not, the message "An error ocurred" is shown. It could be a little excesive if we can silently cushion exceptions.
+
+```
+  runZonedGuarded(() async {
+    runApp(StoreProvider<AppState>(
+        store: await setUpStore(), child: const MyApp()));
+  },
+      (error, stack) => {
+            print(stack),
+            Fluttertoast.showToast(
+                timeInSecForIosWeb: 4,
+                msg: error is CustomException
+                    ? error.message
+                    : "An error ocurred",
+                toastLength: Toast.LENGTH_LONG)
+          });
+```
+
 ## Folder structure
 
 ```
