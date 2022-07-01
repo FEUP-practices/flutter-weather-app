@@ -1,5 +1,9 @@
 # weather_app
 
+## Report
+
+**The report is found [here](https://github.com/FEUP-practices/flutter-weather-app/blob/main/Report.pdf)**
+
 ## Execution
 
 Simply put the .env file with the Google Places API Key and the Open weather API key under the root folder. After this, just execute in the terminal:
